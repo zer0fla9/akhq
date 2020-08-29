@@ -1,5 +1,6 @@
 micronaut:
   security:
+    enabled: true
     # Ldap authentificaton configuration
     ldap:
       default:
@@ -13,6 +14,26 @@ micronaut:
         groups:
           enabled: true
           base: "dc=example,dc=com"
+    # OIDC authentification configuration
+    oauth2:
+      enabled: true
+      clients:
+        oidc:
+          client-id: "<client-id>"
+          client-secret: "<client-secret>"
+          openid:
+            issuer: "<issuer-url>"
+    token:
+      jwt:
+        enabled: true
+        cookie:
+          enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: pleasechangeme
+    session:
+      enabled: false
 
   server:
     context-path: "" # if behind a reverse proxy, path to akhq without trailing slash (optional). Example: akhq is
@@ -164,19 +185,36 @@ akhq:
 
     # Ldap Groups configuration (when using ldap)
     ldap:
-      group:
-        group-ldap-1: # just a key, no matter will be override by name below
-          name: "group-ldap-1"
+      default-group: topic-reader
+      groups:
+        group-ldap-1:
           groups: # Akhq groups list
             - topic-reader
         group-ldap-2:
-          name: "group-ldap-2"
           groups:
             - admin
-      user:
+      users:
         riemann: # ldap user id
           groups: # Akhq groups list
             - topic-reader
         einstein:
           groups:
             - admin
+
+    # OIDC configuration
+    oidc:
+      enabled: true
+      providers:
+        oidc:
+          label: "Login with OIDC"
+          username-field: preferred_username
+          groups-field: roles
+          default-group: topic-reader
+          groups:
+            oidc-admin-group:
+              groups:
+                - admin
+          users:
+            einstein:
+              groups:
+                - admin

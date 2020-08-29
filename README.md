@@ -401,7 +401,7 @@ akhq:
         attributes:
           topics-filter-regexp: "test.*"
     ldap:
-      group:
+      groups:
         mathematicians:
           groups:
             - topic-reader
@@ -409,13 +409,69 @@ akhq:
           groups:
             - topic-reader
             - topic-writer
-      user:
+      users:
         franz:
           groups:
             - topic-reader
             - topic-writer
 
 ```
+
+### OIDC
+To enable OIDC in the application, you'll first have to enable OIDC in micronaut:
+
+```yaml
+micronaut:
+  security:
+    enabled: true
+    oauth2:
+      enabled: true
+      clients:
+        google:
+          client-id: "<client-id>"
+          client-secret: "<client-secret>"
+          openid:
+            issuer: "<issuer-url>"
+    token:
+      jwt:
+        enabled: true
+        cookie:
+          enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: pleasechangeme
+```
+
+To further tell AKHQ to display OIDC options on the login page and customize claim mapping, configure OIDC in the AKHQ config:
+
+```yaml
+akhq:
+  security:
+    oidc:
+      enabled: true
+      providers:
+        google:
+          label: "Login with Google"
+          username-field: preferred_username
+          groups-field: roles
+          default-group: topic-reader
+          groups:
+            mathematicians:
+              groups:
+                - topic-reader
+            scientists:
+              groups:
+                - topic-reader
+                - topic-writer
+          users:
+            franz:
+              groups:
+                - topic-reader
+                - topic-writer
+```
+
+The username field can be any string field, the roles field has to be a JSON array.
 
 ### Server 
 * `micronaut.server.context-path`: if behind a reverse proxy, path to akhq with trailing slash (optional). Example:

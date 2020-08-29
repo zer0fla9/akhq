@@ -113,9 +113,11 @@ dependencies {
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     implementation "io.micronaut:micronaut-security"
     implementation "io.micronaut:micronaut-security-session"
-    implementation "io.micronaut:micronaut-management"
+    implementation "io.micronaut:micronaut-security-jwt"
+    compile "io.micronaut:micronaut-management"
     implementation 'io.micronaut.configuration:micronaut-micrometer-registry-prometheus'
     implementation "io.micronaut.configuration:micronaut-security-ldap"
+    compile "io.micronaut.configuration:micronaut-security-oauth2"
 
     // kafka
     implementation group: "org.apache.kafka", name: "kafka-clients", version: kafkaVersion
