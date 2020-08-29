@@ -23,22 +23,8 @@ public class Oidc {
         private String usernameField = OpenIdClaims.CLAIMS_PREFERRED_USERNAME;
         private String groupsField = "roles";
         private String defaultGroup;
-        private Map<String, GroupMapping> groups = new HashMap<>();
-        private Map<String, UserMapping> users = new HashMap<>();
-
-        public List<GroupMapping> getGroups() {
-            return new ArrayList<>(groups.values());
-        }
-
-        public List<UserMapping> getUsers() {
-            return new ArrayList<>(users.values());
-        }
-
-        @PostConstruct
-        public void postConstruct() {
-            UserGroupUtils.finalizeGroupMappings(groups);
-            UserGroupUtils.finalizeUserMappings(users);
-        }
+        private List<GroupMapping> groups = new ArrayList<>();
+        private List<UserMapping> users = new ArrayList<>();
     }
 
     public Provider getProvider(String key) {

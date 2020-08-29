@@ -112,7 +112,6 @@ dependencies {
     implementation "io.swagger.core.v3:swagger-annotations"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     implementation "io.micronaut:micronaut-security"
-    implementation "io.micronaut:micronaut-security-session"
     implementation "io.micronaut:micronaut-security-jwt"
     compile "io.micronaut:micronaut-management"
     implementation 'io.micronaut.configuration:micronaut-micrometer-registry-prometheus'
